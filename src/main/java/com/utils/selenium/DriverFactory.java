@@ -1,4 +1,4 @@
-package Utils;
+package com.utils.selenium;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -7,6 +7,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 public class DriverFactory {
+
+    //add capabilities
 
     static Logger logger = LogManager.getLogger(DriverFactory.class);
     public WebDriver createDriver(ChromeOptions options, String driverPath){

@@ -1,16 +1,15 @@
-package Utils;
+package com.utils.selenium;
 
 import com.google.common.base.Function;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 
-import javax.xml.bind.Element;
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 public class ElementOperations {
 
@@ -71,6 +70,48 @@ public class ElementOperations {
         //verify whether the update is succesful or not
     }
 
+    public void cancelPopup(){
+        alertHandler("Cancel",null);
+    }
+
+    public void acceptAlert(){
+        alertHandler("Accept",null);
+    }
+
+    public String getTextFromAlert(){
+        return alertHandler("GetText",null);
+    }
+
+    public void enterTextAndCloseAlert(String text){
+        alertHandler("SendText", text);
+    }
+
+    private String alertHandler(String action, String textToEnter){
+
+        Alert alert = driver.switchTo().alert();
+        String alertText = null;
+
+        switch (action){
+            case "Cancel":
+                alert.dismiss();
+                break;
+            case "Accept":
+                alert.accept();
+                break;
+            case "GetText":
+                alertText = alert.getText();
+                break;
+            case "SendText":
+                alert.sendKeys(textToEnter);
+                alert.accept();
+                break;
+            default:
+                logger.debug("Invalid option selected: "+action);
+                break;
+        }
+        return alertText;
+    }
+
     //wait methods
 
     public WebElement waitForTheAppearanceOfElement(By xpath, long timeoutInLong){
@@ -92,6 +133,38 @@ public class ElementOperations {
 
         return element;
 
+    }
+
+    public void moveToElement(By xpath){
+        WebElement element = driver.findElement(xpath);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(element).perform();
+    }
+
+    public void dragAndDrop(By sourceElement, By targetElement){
+        WebElement source = driver.findElement(sourceElement);
+        WebElement target = driver.findElement(targetElement);
+
+        Actions actions = new Actions(driver);
+        actions.dragAndDrop(source, target).perform();
+
+    }
+
+    public void rightClickOnElement(By xpath){
+        WebElement element = driver.findElement(xpath);
+        Actions actions = new Actions(driver);
+
+        actions.contextClick(element);
+    }
+
+    public void rightClickAndSelect(By sourceElement, By optionToSelect){
+        WebElement sourceToRightClick = driver.findElement(sourceElement);
+
+        Actions actions = new Actions(driver);
+        actions.contextClick(sourceToRightClick).perform();
+        waitForTheAppearanceOfElement(optionToSelect,15);
+        WebElement elementToSelect = driver.findElement(optionToSelect);
+        elementToSelect.click();
     }
 
     public void waitForTheDisappearanceOfElement(By xpath, int timeoutInSeconds){
@@ -117,4 +190,8 @@ public class ElementOperations {
             }
         });
     }
+
+
+
+    //add code to handle move hover operations
 }

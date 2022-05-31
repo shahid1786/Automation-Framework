@@ -1,5 +1,7 @@
-import Utils.DriverFactory;
-import Utils.ElementOperations;
+package com.practice.tests;
+
+import com.utils.selenium.DriverFactory;
+import com.utils.selenium.ElementOperations;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
