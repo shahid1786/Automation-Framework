@@ -9,7 +9,12 @@ public class test2 {
     Logger logger  = LogManager.getLogger(test2.class);
 
     @Test(description = "sample test")
-    public void sampleTest2(){
+    public void sampleTest3(){
+        throw new RuntimeException("Sample Test failed");
+    }
+
+    @Test(description = "sample test")
+    public void sampleTest4(){
         throw new RuntimeException("Sample Test failed");
     }
 }

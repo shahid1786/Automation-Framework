@@ -15,36 +15,27 @@ import org.testng.ITestResult;
 public class ExtentReporter implements ITestListener {
 
     static Logger log = LogManager.getLogger(ExtentReporter.class);
-    ThreadLocal<ExtentReports> extent = new ThreadLocal<>();
-    ThreadLocal<ExtentSparkReporter> spark = new ThreadLocal<>();
+
+    ExtentReports extent = new ExtentReports();
+    ExtentSparkReporter spark = new ExtentSparkReporter("ExtentReport.html");
     ThreadLocal<ExtentTest> test = new ThreadLocal<>();
 
-//    public static void main(String args[])  throws ClassNotFoundException {
-//            ExtentReports extent = new ExtentReports();
-//            ExtentSparkReporter spark = new ExtentSparkReporter("target/Spark/Spark.html");
-//            extent.attachReporter(spark);
-//
-//    }
 
     @Override
     public void onStart(ITestContext iTestContext) {
-        log.info("I am in onStart method " + iTestContext.getName());
-        extent.set(new ExtentReports());
-        spark.set(new ExtentSparkReporter("ExtentReport.html"));
-        extent.get().attachReporter(spark.get());
-
+        extent.attachReporter(spark);
     }
 
     @Override
     public void onFinish(ITestContext iTestContext) {
         log.info("I am in onFinish method " + iTestContext.getName());
-        extent.get().flush();
+        extent.flush();
     }
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
         log.info(iTestResult.getName() + " test is starting.");
-        test.set(extent.get().createTest(iTestResult.getName()));
+        test.set(extent.createTest(iTestResult.getName()));
     }
 
     @Override
@@ -57,7 +48,7 @@ public class ExtentReporter implements ITestListener {
     @Override
     public void onTestFailure(ITestResult iTestResult) {
         log.info(iTestResult.getName() + " test is failed.");
-        test.get().log(Status.PASS,"Test Failed");
+        test.get().log(Status.FAIL,"Test Failed");
     }
 
     @Override

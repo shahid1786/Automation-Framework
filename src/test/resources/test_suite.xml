@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Practice Suite">
+<suite name="Practice Suite" parallel="tests" thread-count="2">
 
     <listeners>
 
@@ -11,12 +11,12 @@
         <classes>
             <class name="com.practice.tests.test1"/>
         </classes>
-    </test> <!-- Test -->
+    </test>
 
-<!--    <test name="Test Basics 2">-->
-<!--        <classes>-->
-<!--            <class name="com.practice.tests.test2"/>-->
-<!--        </classes>-->
+    <test name="Test Basics 2">
+        <classes>
+            <class name="com.practice.tests.test2"/>
+        </classes>
 
-<!--    </test> &lt;!&ndash; Test &ndash;&gt;-->
+    </test>
 </suite> <!-- Suite -->
