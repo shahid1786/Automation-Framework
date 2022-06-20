@@ -4,7 +4,7 @@
 
     <listeners>
 
-        <listener class-name="extentListener.ExtentReporter"></listener>
+        <listener class-name="com.utils.generic.ExtentReporter"></listener>
     </listeners>
 
     <test name="Test Basics 1">
